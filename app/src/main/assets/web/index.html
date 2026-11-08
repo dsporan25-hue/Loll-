@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANIME STUDIO — Watch & Discover Premium Anime Online</title>
+  <meta name="description" content="ANIME STUDIO is the ultimate platform for streaming authorized, high-quality anime, discovering trending series, tracking watch history, and exploring anime universes.">
+  <meta name="keywords" content="anime, anime streaming, watch anime, anime studio, open anime, free anime series, trending anime, top anime episodes">
+  <meta name="author" content="ANIME STUDIO">
+  <link rel="canonical" href="https://ais-dev-77qrgbdi7wjaonezz4lwh4-49134668239.asia-east1.run.app/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ais-dev-77qrgbdi7wjaonezz4lwh4-49134668239.asia-east1.run.app/">
+  <meta property="og:title" content="ANIME STUDIO — Premium Anime Streaming & Discovery">
+  <meta property="og:description" content="Discover, stream, and manage authorized anime titles with crystal-clear video playback, episode tracking, and personalized watchlists.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://ais-dev-77qrgbdi7wjaonezz4lwh4-49134668239.asia-east1.run.app/">
+  <meta property="twitter:title" content="ANIME STUDIO — Watch & Discover Premium Anime">
+  <meta property="twitter:description" content="Official ANIME STUDIO portal. Discover trending titles, watch authorized episodes, track continue-watching progress.">
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- Google Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ANIME STUDIO",
+    "url": "https://ais-dev-77qrgbdi7wjaonezz4lwh4-49134668239.asia-east1.run.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://ais-dev-77qrgbdi7wjaonezz4lwh4-49134668239.asia-east1.run.app/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "description": "Authorized premium anime streaming platform with customizable watchlists and community reviews."
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Dots&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="header">
+    <div class="header-container">
+      <div class="brand" onclick="navigateTo('home')">
+        <div class="brand-badge">AS</div>
+        <span class="brand-title">ANIME <span class="accent-text">STUDIO</span></span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-item active" onclick="navigateTo('home'); return false;">Home</a>
+        <a href="#trending" class="nav-item" onclick="navigateTo('trending'); return false;">Trending</a>
+        <a href="#popular" class="nav-item" onclick="navigateTo('popular'); return false;">Popular</a>
+        <a href="#categories" class="nav-item" onclick="navigateTo('categories'); return false;">Genres</a>
+        <a href="#watchlist" class="nav-item" onclick="navigateTo('watchlist'); return false;">Watchlist</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search anime, genres..." oninput="handleSearch(this.value)">
+          <button id="clearSearchBtn" class="clear-btn" onclick="clearSearch()" style="display:none;">&times;</button>
+        </div>
+
+        <button class="btn btn-outline admin-link-btn" onclick="window.location.href='admin.html'">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Admin
+        </button>
+
+        <div class="user-pill" onclick="openProfileModal()">
+          <div class="avatar" id="userAvatar">A</div>
+          <span class="username" id="userNameLabel">Member</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Banner -->
+  <div id="announcementBanner" class="announcement-bar" style="display:none;">
+    <div class="announcement-content">
+      <span class="badge-new">NOTICE</span>
+      <span id="announcementText">Welcome to ANIME STUDIO! All streams are 100% authorized and free to watch.</span>
+    </div>
+    <button class="close-announcement" onclick="dismissAnnouncement()">&times;</button>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- Search Results View (dynamically shown) -->
+    <section id="searchResultsSection" class="section search-results" style="display:none;">
+      <div class="section-header">
+        <h2 class="section-title">Search Results for "<span id="searchQueryLabel"></span>"</h2>
+        <span class="count-badge" id="searchResultsCount">0 found</span>
+      </div>
+      <div class="anime-grid" id="searchResultsGrid"></div>
+    </section>
+
+    <!-- Hero Showcase Carousel -->
+    <section id="heroSection" class="hero-section">
+      <div class="hero-card" id="heroCard">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-meta">
+            <span class="badge-featured">★ FEATURED MASTERPIECE</span>
+            <span class="badge-genre" id="heroGenre">Sci-Fi / Mecha</span>
+            <span class="badge-rating" id="heroRating">★ 9.4</span>
+          </div>
+          <h1 class="hero-title" id="heroTitle">Tears of Steel: Cyber Rebirth</h1>
+          <p class="hero-synopsis" id="heroSynopsis">
+            In a dystopian future, a group of warriors and tech scientists gather at the old cathedral to stage a desperate holographic reconstruction to save humanity from rampaging robots.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="heroPlayBtn" onclick="playFeaturedAnime()">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Watch Episode 1
+            </button>
+            <button class="btn btn-secondary" id="heroDetailsBtn" onclick="openFeaturedDetails()">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Details
+            </button>
+            <button class="btn btn-icon" id="heroWatchlistBtn" onclick="toggleHeroWatchlist()" title="Add to Watchlist">
+              <svg id="heroHeartIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Genre Chips / Filter Bar -->
+    <section class="genre-filter-section">
+      <div class="genre-scroll" id="genreFilterBar">
+        <button class="genre-chip active" onclick="filterByGenre('All')">All Genres</button>
+        <button class="genre-chip" onclick="filterByGenre('Action')">Action</button>
+        <button class="genre-chip" onclick="filterByGenre('Sci-Fi')">Sci-Fi</button>
+        <button class="genre-chip" onclick="filterByGenre('Fantasy')">Fantasy</button>
+        <button class="genre-chip" onclick="filterByGenre('Romance')">Romance</button>
+        <button class="genre-chip" onclick="filterByGenre('Isekai')">Isekai</button>
+        <button class="genre-chip" onclick="filterByGenre('Shonen')">Shonen</button>
+        <button class="genre-chip" onclick="filterByGenre('Slice of Life')">Slice of Life</button>
+        <button class="genre-chip" onclick="filterByGenre('Adventure')">Adventure</button>
+      </div>
+    </section>
+
+    <!-- Continue Watching Section -->
+    <section id="continueWatchingSection" class="section" style="display:none;">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" class="title-icon">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Continue Watching
+        </h2>
+        <button class="link-btn" onclick="clearWatchHistory()">Clear History</button>
+      </div>
+      <div class="horizontal-scroll" id="continueWatchingRow"></div>
+    </section>
+
+    <!-- Trending Anime Section -->
+    <section id="trendingSection" class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="fire-icon">🔥</span> Trending Anime This Week
+        </h2>
+        <span class="section-subtitle">Most viewed by our community</span>
+      </div>
+      <div class="anime-grid" id="trendingGrid"></div>
+    </section>
+
+    <!-- Latest Releases Section -->
+    <section id="latestSection" class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" class="title-icon">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Latest Episodes & Releases
+        </h2>
+        <span class="section-subtitle">Freshly updated series</span>
+      </div>
+      <div class="anime-grid" id="latestGrid"></div>
+    </section>
+
+    <!-- Popular All-Time Section -->
+    <section id="popularSection" class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" class="title-icon">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+          Hall of Fame — Top Rated Anime
+        </h2>
+        <span class="section-subtitle">Critically acclaimed works</span>
+      </div>
+      <div class="anime-grid" id="popularGrid"></div>
+    </section>
+
+    <!-- Watchlist Section -->
+    <section id="watchlistSection" class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" class="title-icon">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          My Watchlist (<span id="watchlistCount">0</span>)
+        </h2>
+        <span class="section-subtitle">Anime saved for later</span>
+      </div>
+      <div class="anime-grid" id="watchlistGrid">
+        <div class="empty-state">
+          <p>Your watchlist is empty. Tap the bookmark icon on any anime to save it here!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Video Player Modal -->
+  <div id="videoModal" class="modal video-modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeVideoModal()"></div>
+    <div class="modal-dialog video-dialog">
+      <div class="modal-header">
+        <div class="video-info-header">
+          <span class="video-anime-title" id="playerAnimeTitle">Anime Title</span>
+          <span class="video-ep-title" id="playerEpisodeTitle">Episode 1</span>
+        </div>
+        <button class="close-modal-btn" onclick="closeVideoModal()">&times;</button>
+      </div>
+      <div class="player-wrapper">
+        <video id="mainVideoPlayer" controls playsinline preload="metadata">
+          <source id="videoSource" src="" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="player-details">
+        <div class="player-controls-extra">
+          <div class="source-badge">
+            <span class="dot-live"></span> Authorized Open Stream (Creative Commons / Open Movie)
+          </div>
+          <div class="player-actions">
+            <button class="btn btn-sm btn-outline" onclick="prevEpisode()">Previous</button>
+            <button class="btn btn-sm btn-primary" onclick="nextEpisode()">Next Episode</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Anime Details Modal -->
+  <div id="detailsModal" class="modal details-modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeDetailsModal()"></div>
+    <div class="modal-dialog details-dialog">
+      <button class="close-modal-btn floating-close" onclick="closeDetailsModal()">&times;</button>
+      
+      <div class="details-banner" id="detailsBanner">
+        <div class="banner-gradient"></div>
+        <div class="details-header-card">
+          <img id="detailsPoster" src="" alt="Poster" class="details-poster">
+          <div class="details-summary">
+            <div class="details-tags" id="detailsTags"></div>
+            <h2 class="details-title" id="detailsTitle">Title</h2>
+            <h4 class="details-jp-title" id="detailsJpTitle">Japanese Title</h4>
+            <div class="details-stat-row">
+              <span class="stat-pill">★ <b id="detailsRating">8.9</b></span>
+              <span class="stat-pill" id="detailsYear">2024</span>
+              <span class="stat-pill" id="detailsEpisodesCount">12 Episodes</span>
+              <span class="stat-pill badge-status" id="detailsStatus">Completed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="details-body">
+        <div class="details-synopsis-section">
+          <h3>Synopsis</h3>
+          <p id="detailsSynopsis">Synopsis text...</p>
+        </div>
+
+        <div class="details-studio-info">
+          <span><b>Studio:</b> <span id="detailsStudio">Anime Studio Works</span></span>
+          <span><b>Age Rating:</b> <span id="detailsAgeRating">PG-13</span></span>
+          <span><b>Source:</b> Authorized Open Film Foundation</span>
+        </div>
+
+        <div class="episodes-section">
+          <div class="episodes-header">
+            <h3>Episodes Available</h3>
+            <span class="ep-count" id="detailsEpisodeCounter">0 Episodes</span>
+          </div>
+          <div class="episodes-list" id="episodesListContainer">
+            <!-- Dynamic episode list -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Profile Modal -->
+  <div id="profileModal" class="modal profile-modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeProfileModal()"></div>
+    <div class="modal-dialog profile-dialog">
+      <div class="modal-header">
+        <h2>My Anime Studio Profile</h2>
+        <button class="close-modal-btn" onclick="closeProfileModal()">&times;</button>
+      </div>
+      <div class="profile-card">
+        <div class="profile-avatar">AS</div>
+        <div class="profile-info">
+          <h3 id="profileNameDisplay">Anime Otaku</h3>
+          <p id="profileEmailDisplay">member@animestudio.com</p>
+          <span class="role-badge" id="profileRoleBadge">Viewer Member</span>
+        </div>
+      </div>
+
+      <div class="profile-stats-grid">
+        <div class="profile-stat-box">
+          <div class="stat-number" id="statWatchedEpisodes">0</div>
+          <div class="stat-label">Episodes Watched</div>
+        </div>
+        <div class="profile-stat-box">
+          <div class="stat-number" id="statWatchlistCount">0</div>
+          <div class="stat-label">Watchlist Titles</div>
+        </div>
+        <div class="profile-stat-box">
+          <div class="stat-number" id="statHoursStreamed">0.0h</div>
+          <div class="stat-label">Streaming Time</div>
+        </div>
+      </div>
+
+      <div class="profile-settings-form">
+        <label>Display Name</label>
+        <input type="text" id="profileNameInput" class="form-input" value="Anime Fan">
+        <button class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="saveProfile()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with SEO Links -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="brand">
+          <div class="brand-badge">AS</div>
+          <span class="brand-title">ANIME <span class="accent-text">STUDIO</span></span>
+        </div>
+        <p class="footer-desc">
+          ANIME STUDIO is a community-driven anime hub. We exclusively provide authorized, creative-commons, and public domain anime productions, ensuring artists and studios are respected.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home" onclick="navigateTo('home'); return false;">Home</a></li>
+          <li><a href="#trending" onclick="navigateTo('trending'); return false;">Trending Anime</a></li>
+          <li><a href="#popular" onclick="navigateTo('popular'); return false;">Top Rated</a></li>
+          <li><a href="admin.html">Admin Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal & Search</h4>
+        <ul>
+          <li><a href="sitemap.xml">XML Sitemap</a></li>
+          <li><a href="robots.txt">Robots.txt</a></li>
+          <li><a href="#" onclick="alert('All video streams are verified open source & creative commons media.'); return false;">Content Policy</a></li>
+          <li><a href="#" onclick="alert('ANIME STUDIO conforms with DMCA and respects copyright.'); return false;">DMCA & Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ANIME STUDIO. All rights reserved. Built for Web & Android.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

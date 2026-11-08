@@ -1,0 +1,6 @@
+{
+  "name": "ANIME STUDIO",
+  "description": "Professional anime discovery, streaming, and management platform with user portal and admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
